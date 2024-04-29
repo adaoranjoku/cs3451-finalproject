@@ -75,9 +75,8 @@ float noiseOctave(vec2 v, int num)
 
 float height(vec2 v){
     float h = 0;
-	h = 0.75 * noiseOctave(v, 10) * 1;
-	if(h<0) h *= .5;
-	return h * 2.;
+	h = 0.5 * noiseOctave(v, 3);
+	return h;
 }
 
 vec3 compute_normal(vec2 v, float d)
@@ -119,9 +118,9 @@ vec3 shading_terrain(vec3 pos) {
 
 	float h = pos.z + .8;
 	h = clamp(h, 0.0, 1.0);
-	vec3 emissiveColor = mix(vec3(.4,.6,.2), vec3(.4,.3,.2), h);
+	vec3 emissiveColor = mix(vec3(.965,.843,.69)*2, vec3(.965,.843,.69)*2, h);
 
-	return color * emissiveColor;
+	return color * emissiveColor + hash2(pos.xy*hash2(pos.xy)).x*vec3(.1);
 }
 
 void main()
