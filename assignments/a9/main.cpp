@@ -104,25 +104,25 @@ public:
 
         //// Background Option (2): Programmable Canvas
         //// By default, we load a GT buzz + a number of stars
-        {
-            bgEffect = Add_Interactive_Object<OpenGLBgEffect>();
-            bgEffect->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("stars"));
-            bgEffect->Add_Texture("tex_buzz", OpenGLTextureLibrary::Get_Texture("buzz_color")); // bgEffect can also Add_Texture
-            bgEffect->Initialize();
-        }
+//        {
+//            bgEffect = Add_Interactive_Object<OpenGLBgEffect>();
+//            bgEffect->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("stars"));
+//            bgEffect->Add_Texture("tex_buzz", OpenGLTextureLibrary::Get_Texture("buzz_color")); // bgEffect can also Add_Texture
+//            bgEffect->Initialize();
+//        }
 
         //// Background Option (3): Sky box
         //// Here we provide a default implementation of a sky box; customize it for your own sky box
-        /*
+
         {
             // from https://www.humus.name/index.php?page=Textures
             const std::vector<std::string> cubemap_files{
-                "cubemap/posx.jpg",     //// + X
-                "cubemap/negx.jpg",     //// - X
-                "cubemap/posy.jpg",     //// + Y
-                "cubemap/negy.jpg",     //// - Y
-                "cubemap/posz.jpg",     //// + Z
-                "cubemap/negz.jpg",     //// - Z
+                "cubemap/px.png",     //// + X
+                "cubemap/nx.png",     //// - X
+                "cubemap/py.png",     //// + Y
+                "cubemap/ny.png",     //// - Y
+                "cubemap/pz.png",     //// + Z
+                "cubemap/nz.png",     //// - Z
             };
             OpenGLTextureLibrary::Instance()->Add_CubeMap_From_Files(cubemap_files, "cube_map");
 
@@ -130,35 +130,34 @@ public:
             skybox->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("skybox"));
             skybox->Initialize();
         }
-        */
 
         //// Background Option (4): Sky sphere
         //// Here we provide a default implementation of a textured sphere; customize it for your own sky sphere
-        {
-            //// create object by reading an obj mesh
-            auto sphere = Add_Obj_Mesh_Object("obj/sphere.obj");
-
-            //// set object's transform
-            Matrix4f t;
-            t << 1, 0, 0, -1.5,
-                0, 1, 0, -1,
-                0, 0, 1, 0.5,
-                0, 0, 0, 1;
-            sphere->Set_Model_Matrix(t);
-
-            //// set object's material
-            sphere->Set_Ka(Vector3f(0.1, 0.1, 0.1));
-            sphere->Set_Kd(Vector3f(0.7, 0.7, 0.7));
-            sphere->Set_Ks(Vector3f(.2, .2, .2));
-            sphere->Set_Shininess(128);
-
-            //// bind texture to object
-            sphere->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("sphere_color"));
-            sphere->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("sphere_normal"));
-
-            //// bind shader to object
-            sphere->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
-        }
+//        {
+//            //// create object by reading an obj mesh
+//            auto sphere = Add_Obj_Mesh_Object("obj/sphere.obj");
+//
+//            //// set object's transform
+//            Matrix4f t;
+//            t << 1, 0, 0, -1.5,
+//                0, 1, 0, -1,
+//                0, 0, 1, 0.5,
+//                0, 0, 0, 1;
+//            sphere->Set_Model_Matrix(t);
+//
+//            //// set object's material
+//            sphere->Set_Ka(Vector3f(0.1, 0.1, 0.1));
+//            sphere->Set_Kd(Vector3f(0.7, 0.7, 0.7));
+//            sphere->Set_Ks(Vector3f(.2, .2, .2));
+//            sphere->Set_Shininess(128);
+//
+//            //// bind texture to object
+//            sphere->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("sphere_color"));
+//            sphere->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("sphere_normal"));
+//
+//            //// bind shader to object
+//            sphere->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
+//        }
 
         //// Here we load a bunny object with the basic shader to show how to add an object into the scene
         {
