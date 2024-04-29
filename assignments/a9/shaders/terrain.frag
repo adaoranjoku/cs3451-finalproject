@@ -61,30 +61,7 @@ float perlin_noise(vec2 v)
 					 dot( hash2(i + vec2(1.0, 0.0)), f - vec2(1.0,0.0)), m.x),
 				mix( dot( hash2(i + vec2(0.0, 1.0)), f - vec2(0.0,1.0)),
 					 dot( hash2(i + vec2(1.0, 1.0)), f - vec2(1.0,1.0)), m.x), m.y);
-	vec2 s = f*f*(3.0-2.0*f);
-
-	vec2 f00 = f-vec2(0,0);
-	vec2 f10 = f-vec2(1,0);
-	vec2 f01 = f-vec2(0,1);
-	vec2 f11 = f-vec2(1,1);
-
-	vec2 g00 = hash2(i);
-	vec2 g10 = hash2(i+vec2(1,0));
-	vec2 g01 = hash2(i+vec2(0,1));
-	vec2 g11 = hash2(i+vec2(1,1));
-
-	float v00 = dot(f00, g00);
-	float v10 = dot(f10, g10);
-	float v01 = dot(f01, g01);
-	float v11 = dot(f11, g11);
-
-	float u0 = mix(v00, v10, s.x);
-	float u1 = mix(v01, v11, s.x);
-	float u = mix(u0, u1, s.y);
-
-	noise = u;
-
-	return noise *  0.1;
+	return noise;
 }
 
 float noiseOctave(vec2 v, int num)
@@ -98,11 +75,9 @@ float noiseOctave(vec2 v, int num)
 
 float height(vec2 v){
     float h = 0;
-	//h = pow(noiseOctave(v, 2), 0.1) * 0.12;
-	h= pow(noiseOctave(v, 2) * 3, 1.9);
+	h = 0.75 * noiseOctave(v, 10) * 1;
 	if(h<0) h *= .5;
-
-	return h *0.5;
+	return h * 2.;
 }
 
 vec3 compute_normal(vec2 v, float d)
@@ -142,9 +117,9 @@ vec3 shading_terrain(vec3 pos) {
 
     vec3 color = shading_phong(lt[0], e, p, s, n).xyz;
 
-	float h = pos.z + 20.8;
+	float h = pos.z + .8;
 	h = clamp(h, 0.0, 1.0);
-	vec3 emissiveColor = mix(vec3(.761,.669,.502), vec3(.965,.843,.691), h);
+	vec3 emissiveColor = mix(vec3(.4,.6,.2), vec3(.4,.3,.2), h);
 
 	return color * emissiveColor;
 }
