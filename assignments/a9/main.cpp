@@ -212,8 +212,10 @@ public:
             terrain->Set_Ks(Vector3f(1, 1, 1));
             terrain->Set_Shininess(128.f);
 
+
             //// bind shader to object (we do not bind texture for this object because we create noise for texture)
             terrain->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("terrain"));
+
         }
 
         //// Here we show an example of adding a transparent object with alpha blending
