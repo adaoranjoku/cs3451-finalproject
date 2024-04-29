@@ -68,7 +68,7 @@ public:
         //// Here "tex_sampler" is the name of the texture sampler2D you used in your shader, and
         //// "tex_name" needs to be one of the texture names you created previously with Add_Texture_From_File()
 
-        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/earth_color.png", "sphere_color");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/volcano_color.png", "sphere_color");
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/earth_normal.png", "sphere_normal");
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/octopus_color.jpg", "octopus_color");
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/octopus_normal.jpg", "octopus_normal");
@@ -143,16 +143,42 @@ public:
 
             //// set object's transform
             Matrix4f t;
-            t << 0.5, 0, 0, 1.5,
-                0, 0.5, 0, -1,
-                0, 0, 0.5, 0.5,
+            t << 0.03, 0, 0, 1.5,
+                0, 0.02, 0, -2.3,
+                0, 0, 0.04, -4,
                 0, 0, 0, 1;
             sphere->Set_Model_Matrix(t);
 
             //// set object's material
-            sphere->Set_Ka(Vector3f(0.1, 0.1, 0.1));
-            sphere->Set_Kd(Vector3f(1.0, 1.0, 1.0));
-            sphere->Set_Ks(Vector3f(.4, .4, .4));
+            sphere->Set_Ka(Vector3f(0.6, 0.4, 0.3)*5);
+            sphere->Set_Kd(Vector3f(1.0, 0.8, 0.7)*5);
+            sphere->Set_Ks(Vector3f(.2, .2, .2));
+            sphere->Set_Shininess(128);
+
+            //// bind texture to object
+            //sphere->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("sphere_color"));
+            //sphere->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("sphere_normal"));
+
+            //// bind shader to object
+            sphere->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("phong_with_spec"));
+        }
+
+        {
+            //// create object by reading an obj mesh
+            auto sphere = Add_Obj_Mesh_Object("obj/sphere.obj");
+
+            //// set object's transform
+            Matrix4f t;
+            t << 0.4, 0, 0, 3.6,
+                0, 0.1, 0, -.9,
+                0, 0, 0.5, -1.7,
+                0, 0, 0, 1;
+            sphere->Set_Model_Matrix(t);
+
+            //// set object's material
+            sphere->Set_Ka(Vector3f(0.6, 0.4, 0.3) * 5);
+            sphere->Set_Kd(Vector3f(1.0, 0.8, 0.7) * 5);
+            sphere->Set_Ks(Vector3f(.2, .2, .2));
             sphere->Set_Shininess(128);
 
             //// bind texture to object
