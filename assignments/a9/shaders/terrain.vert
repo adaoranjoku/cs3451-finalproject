@@ -53,12 +53,8 @@ float noiseOctave(vec2 v, int num)
 float height(vec2 v)
 {
     float h = 0;
-	// Your implementation starts here
-    h = 0.75 * noiseOctave(v, 10);
-    if(h < 0)
-        h *= .5;
-	// Your implementation ends here
-    return h * 2.;
+    h = 0.3 * noiseOctave(v, 3);
+    return h;
 }
 
 uniform mat4 model;		/*model matrix*/

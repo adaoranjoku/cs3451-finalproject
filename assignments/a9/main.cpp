@@ -21,6 +21,9 @@
 #define CLOCKS_PER_SEC 100000
 #endif
 
+#define M_PI 3.14159265358979323846
+#define DegreesToRadians(degrees) (degrees * M_PI / 180)
+
 class MyDriver : public OpenGLViewer
 {
     std::vector<OpenGLTriangleMesh*> mesh_object_array;
@@ -81,9 +84,9 @@ public:
         //// You can also create your own lights by directly declaring them in a shader without using Add_Light().
         //// Here we declared three default lights for you. Feel free to add/delete/change them at your will.
 
-        opengl_window->Add_Light(Vector3f(3, 1, 3), Vector3f(0.4, 0.4, 0.4), Vector3f(1, 1, 1), Vector3f(0.5, 0.5, 0.5));
-        opengl_window->Add_Light(Vector3f(0, 0, -5), Vector3f(0.4, 0.4, 0.4), Vector3f(0.9, 0.9, 0.9), Vector3f(0.5, 0.5, 0.5));
-        opengl_window->Add_Light(Vector3f(-5, 1, 3), Vector3f(0.4, 0.4, 0.4), Vector3f(0.9, 0.9, 0.9), Vector3f(0.5, 0.5, 0.5));
+        opengl_window->Add_Light(Vector3f(3, 1, 3)*20, Vector3f(0.4, 0.4, 0.4), Vector3f(1, 1, 1), Vector3f(0.5, 0.5, 0.5));
+        opengl_window->Add_Light(Vector3f(0, 1, -5)*20, Vector3f(0.4, 0.4, 0.4), Vector3f(0.9, 0.9, 0.9), Vector3f(0.5, 0.5, 0.5));
+        opengl_window->Add_Light(Vector3f(-5, 1, 3)*20, Vector3f(0.4, 0.4, 0.4), Vector3f(0.9, 0.9, 0.9), Vector3f(0.5, 0.5, 0.5));
 
         //// Add the background / environment
         //// Here we provide you with four default options to create the background of your scene:
@@ -104,6 +107,12 @@ public:
 
         //// Background Option (2): Programmable Canvas
         //// By default, we load a GT buzz + a number of stars
+        {
+            //bgEffect = Add_Interactive_Object<OpenGLBgEffect>();
+            //bgEffect->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("stars"));
+            //bgEffect->Add_Texture("tex_buzz", OpenGLTextureLibrary::Get_Texture("buzz_color")); // bgEffect can also Add_Texture
+            //bgEffect->Initialize();
+        }
 //        {
 //            bgEffect = Add_Interactive_Object<OpenGLBgEffect>();
 //            bgEffect->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("stars"));
@@ -130,6 +139,7 @@ public:
             skybox->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("skybox"));
             skybox->Initialize();
         }
+        */
 
         //// Background Option (4): Sky sphere
         //// Here we provide a default implementation of a textured sphere; customize it for your own sky sphere
@@ -165,17 +175,18 @@ public:
             auto bunny = Add_Obj_Mesh_Object("obj/octopus.obj");
 
             //// set object's transform
-            Matrix4f t;
-            t << .5, 0, 0, 1.5,
-                0, .5, 0, 0,
+            Matrix4f t, r;
+            r = Rotation_Matrix(1, 150);
+            t << .5, 0, 0, 0,
+                0, .5, 0, -1,
                 0, 0, .5, 0,
                 0, 0, 0, 1;
-            bunny->Set_Model_Matrix(t);
+            bunny->Set_Model_Matrix(t * r);
 
             //// set object's material
-            bunny->Set_Ka(Vector3f(0.1, 0.1, 0.1));
+            bunny->Set_Ka(Vector3f(0.2, 0.2, 0.2));
             bunny->Set_Kd(Vector3f(1.0, 1.0, 1.0));
-            bunny->Set_Ks(Vector3f(.4, .4, .4));
+            bunny->Set_Ks(Vector3f(.5, .5, .5));
             bunny->Set_Shininess(128);
 
             //// bind texture to object
@@ -194,24 +205,21 @@ public:
 
             //// set object's transform
             Matrix4f r, s, t;
-            r << 1, 0, 0, 0,
-                0, 0.5, 0.67, 0,
-                0, -0.67, 0.5, 0,
+            r = Rotation_Matrix(0, 90);
+            s << 3, 0, 0, 0,
+                0, 2, 0, 0,
+                0, 0, 3, 0,
                 0, 0, 0, 1;
-            s << 0.5, 0, 0, 0,
-                0, 0.5, 0, 0,
-                0, 0, 0.5, 0,
-                0, 0, 0, 1;
-            t << 1, 0, 0, -2,
-                0, 1, 0, 0.5,
-                0, 0, 1, 0,
+            t << 1, 0, 0, -5,
+                0, 1, 0, -2,
+                0, 0, 1, -10,
                 0, 0, 0, 1,
                 terrain->Set_Model_Matrix(t * s * r);
 
             //// set object's material
-            terrain->Set_Ka(Vector3f(0.1f, 0.1f, 0.1f));
-            terrain->Set_Kd(Vector3f(0.7f, 0.7f, 0.7f));
-            terrain->Set_Ks(Vector3f(1, 1, 1));
+            terrain->Set_Ka(Vector3f(0.7f, 0.7f, 0.7f));
+            terrain->Set_Kd(Vector3f(0.4f, 0.4f, 0.4f));
+            terrain->Set_Ks(Vector3f(.1, .1, .1));
             terrain->Set_Shininess(128.f);
 
 
@@ -223,46 +231,46 @@ public:
         //// Here we show an example of adding a transparent object with alpha blending
         //// This example will be useful if you implement objects such as tree leaves, grass blades, flower pedals, etc.
         //// Alpha blending will be turned on automatically if your texture has the alpha channel
-        {
-            //// create object by reading an obj mesh
-            auto sqad = Add_Obj_Mesh_Object("obj/sqad.obj");
+        //{
+        //    //// create object by reading an obj mesh
+        //    auto sqad = Add_Obj_Mesh_Object("obj/sqad.obj");
 
-            //// set object's transform
-            Matrix4f t;
-            t << 1, 0, 0, -0.5,
-                0, 1, 0, 0,
-                0, 0, 1, 1.5,
-                0, 0, 0, 1;
-            sqad->Set_Model_Matrix(t);
+        //    //// set object's transform
+        //    Matrix4f t;
+        //    t << 1, 0, 0, -0.5,
+        //        0, 1, 0, 0,
+        //        0, 0, 1, 1.5,
+        //        0, 0, 0, 1;
+        //    sqad->Set_Model_Matrix(t);
 
-            //// bind texture to object
-            sqad->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("window_color"));
+        //    //// bind texture to object
+        //    sqad->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("window_color"));
 
-            //// bind shader to object
-            sqad->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("blend"));
-        }
+        //    //// bind shader to object
+        //    sqad->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("blend"));
+        //}
 
         //// Here we show an example of adding a billboard particle with a star shape using alpha blending
         //// The billboard is rendered with its texture and is always facing the camera.
         //// This example will be useful if you plan to implement a CPU-based particle system.
-        {
-            //// create object by reading an obj mesh
-            auto sqad = Add_Obj_Mesh_Object("obj/sqad.obj");
+        //{
+        //    //// create object by reading an obj mesh
+        //    auto sqad = Add_Obj_Mesh_Object("obj/sqad.obj");
 
-            //// set object's transform
-            Matrix4f t;
-            t << 1, 0, 0, 0,
-                0, 1, 0, 0,
-                0, 0, 1, 2.5,
-                0, 0, 0, 1;
-            sqad->Set_Model_Matrix(t);
+        //    //// set object's transform
+        //    Matrix4f t;
+        //    t << 1, 0, 0, 0,
+        //        0, 1, 0, 0,
+        //        0, 0, 1, 2.5,
+        //        0, 0, 0, 1;
+        //    sqad->Set_Model_Matrix(t);
 
-            //// bind texture to object
-            sqad->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("star_color"));
+        //    //// bind texture to object
+        //    sqad->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("star_color"));
 
-            //// bind shader to object
-            sqad->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("billboard"));
-        }
+        //    //// bind shader to object
+        //    sqad->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("billboard"));
+        //}
 
         //// Here we show an example of shading (ray-tracing) a sphere with environment mapping
         /*
@@ -305,6 +313,30 @@ public:
 
         mesh_object_array.push_back(mesh_obj);
         return mesh_obj;
+    }
+
+    Matrix4f Rotation_Matrix(int axis, float theta) {
+        theta = DegreesToRadians(theta);
+        Matrix4f r;
+        if (axis == 0) {
+            r << 1., 0., 0., 0.,
+                0., std::cos(theta), -std::sin(theta), 0.,
+                0., std::sin(theta), std::cos(theta), 0.,
+                0., 0., 0., 1.;
+        }
+        else if (axis == 1) {
+            r << std::cos(theta), 0., std::sin(theta), 0.,
+                0., 1., 0., 0.,
+                -std::sin(theta), 0., std::cos(theta), 0.,
+                0., 0., 0., 1.;
+        }
+        else if (axis == 2) {
+            r << std::cos(theta), -std::sin(theta), 0., 0.,
+                std::sin(theta), std::cos(theta), 0., 0.,
+                0., 0., 1., 0.,
+                0., 0., 0., 1.;
+        }
+        return r;
     }
 
     //// Go to next frame
