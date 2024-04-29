@@ -113,19 +113,25 @@ public:
             //bgEffect->Add_Texture("tex_buzz", OpenGLTextureLibrary::Get_Texture("buzz_color")); // bgEffect can also Add_Texture
             //bgEffect->Initialize();
         }
+//        {
+//            bgEffect = Add_Interactive_Object<OpenGLBgEffect>();
+//            bgEffect->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("stars"));
+//            bgEffect->Add_Texture("tex_buzz", OpenGLTextureLibrary::Get_Texture("buzz_color")); // bgEffect can also Add_Texture
+//            bgEffect->Initialize();
+//        }
 
         //// Background Option (3): Sky box
         //// Here we provide a default implementation of a sky box; customize it for your own sky box
-        /*
+
         {
             // from https://www.humus.name/index.php?page=Textures
             const std::vector<std::string> cubemap_files{
-                "cubemap/posx.jpg",     //// + X
-                "cubemap/negx.jpg",     //// - X
-                "cubemap/posy.jpg",     //// + Y
-                "cubemap/negy.jpg",     //// - Y
-                "cubemap/posz.jpg",     //// + Z
-                "cubemap/negz.jpg",     //// - Z
+                "cubemap/px.png",     //// + X
+                "cubemap/nx.png",     //// - X
+                "cubemap/py.png",     //// + Y
+                "cubemap/ny.png",     //// - Y
+                "cubemap/pz.png",     //// + Z
+                "cubemap/nz.png",     //// - Z
             };
             OpenGLTextureLibrary::Instance()->Add_CubeMap_From_Files(cubemap_files, "cube_map");
 
