@@ -1,0 +1,13 @@
+# Blender 4.0.1 MTL File: 'None'
+# www.blender.org
+
+newmtl Group1_Mesh_default
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd C:/Users/zanes/OneDrive/Documents/3451Labs/graphics-final/assignments/a4/octopus.jpg
+map_refl C:/Users/zanes/OneDrive/Documents/3451Labs/graphics-final/assignments/a4/octopus_details.jpg
