@@ -165,7 +165,110 @@ public:
 
         {
             //// create object by reading an obj mesh
-            auto sphere = Add_Obj_Mesh_Object("obj/sphere.obj");
+            auto seaweed1 = Add_Obj_Mesh_Object("obj/seaweed.obj");
+
+            //// set object's transform
+            Matrix4f t;
+            t << -2, 0, 0, -3,
+                0, 1, 0, -2,
+                0, 0, -1, 0,
+                0, 0, 0, 1;
+            seaweed1->Set_Model_Matrix(t);
+
+            //// set object's material
+            seaweed1->Set_Ka(Vector3f(0.6, 0.4, 0.3) * 5);
+            seaweed1->Set_Kd(Vector3f(1.0, 0.8, 0.7) * 5);
+            seaweed1->Set_Ks(Vector3f(.2, .2, .2));
+            seaweed1->Set_Shininess(128);
+
+            //// bind texture to object
+            //seaweed1->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("sphere_color"));
+            seaweed1->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("sphere_normal"));
+
+            //// bind shader to object
+            seaweed1->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
+        }
+        {
+            //// create object by reading an obj mesh
+            auto seaweed2 = Add_Obj_Mesh_Object("obj/seaweed.obj");
+
+            //// set object's transform
+            Matrix4f t;
+            t << -2, 0, 0, -2,
+                0, 1, 0, -2,
+                0, 0, -1, -3,
+                0, 0, 0, 1;
+            seaweed2->Set_Model_Matrix(t);
+
+            //// set object's material
+            seaweed2->Set_Ka(Vector3f(0.6, 0.4, 0.3) * 5);
+            seaweed2->Set_Kd(Vector3f(1.0, 0.8, 0.7) * 5);
+            seaweed2->Set_Ks(Vector3f(.2, .2, .2));
+            seaweed2->Set_Shininess(128);
+
+            //// bind texture to object
+            //seaweed1->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("sphere_color"));
+            seaweed2->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("sphere_normal"));
+
+            //// bind shader to object
+            seaweed2->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
+        }
+
+        {
+            //// create object by reading an obj mesh
+            auto seaweed3 = Add_Obj_Mesh_Object("obj/seaweed.obj");
+
+            //// set object's transform
+            Matrix4f t;
+            t << -2, 0, 0, 1,
+                0, 1, 0, -2,
+                0, 0, -1, -4,
+                0, 0, 0, 1;
+            seaweed3->Set_Model_Matrix(t);
+
+            //// set object's material
+            seaweed3->Set_Ka(Vector3f(0.6, 0.4, 0.3) * 5);
+            seaweed3->Set_Kd(Vector3f(1.0, 0.8, 0.7) * 5);
+            seaweed3->Set_Ks(Vector3f(.2, .2, .2));
+            seaweed3->Set_Shininess(128);
+
+            //// bind texture to object
+            //seaweed1->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("sphere_color"));
+            seaweed3->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("sphere_normal"));
+
+            //// bind shader to object
+            seaweed3->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
+        }
+
+        {
+            //// create object by reading an obj mesh
+            auto seaweed4 = Add_Obj_Mesh_Object("obj/seaweed.obj");
+
+            //// set object's transform
+            Matrix4f t;
+            t << -2, 0, 0, -1,
+                0, 1, 0, -2,
+                0, 0, -1, -4,
+                0, 0, 0, 1;
+            seaweed4->Set_Model_Matrix(t);
+
+            //// set object's material
+            seaweed4->Set_Ka(Vector3f(0.6, 0.4, 0.3) * 5);
+            seaweed4->Set_Kd(Vector3f(1.0, 0.8, 0.7) * 5);
+            seaweed4->Set_Ks(Vector3f(.2, .2, .2));
+            seaweed4->Set_Shininess(128);
+
+            //// bind texture to object
+            //seaweed1->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("sphere_color"));
+            seaweed4->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("sphere_normal"));
+
+            //// bind shader to object
+            seaweed4->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
+        }
+
+        {
+            //// create object by reading an obj mesh
+            auto seaweed = Add_Obj_Mesh_Object("obj/sphere.obj");
 
             //// set object's transform
             Matrix4f t;
@@ -173,20 +276,20 @@ public:
                 0, 0.1, 0, -.9,
                 0, 0, 0.5, -1.7,
                 0, 0, 0, 1;
-            sphere->Set_Model_Matrix(t);
+            seaweed->Set_Model_Matrix(t);
 
             //// set object's material
-            sphere->Set_Ka(Vector3f(0.6, 0.4, 0.3) * 5);
-            sphere->Set_Kd(Vector3f(1.0, 0.8, 0.7) * 5);
-            sphere->Set_Ks(Vector3f(.2, .2, .2));
-            sphere->Set_Shininess(128);
+            seaweed->Set_Ka(Vector3f(0.6, 0.4, 0.3) * 5);
+            seaweed->Set_Kd(Vector3f(1.0, 0.8, 0.7) * 5);
+            seaweed->Set_Ks(Vector3f(.2, .2, .2));
+            seaweed->Set_Shininess(128);
 
             //// bind texture to object
-            sphere->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("sphere_color"));
-            sphere->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("sphere_normal"));
+            seaweed->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("sphere_color"));
+            seaweed->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("sphere_normal"));
 
             //// bind shader to object
-            sphere->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
+            seaweed->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
         }
 
         //// Here we load a bunny object with the basic shader to show how to add an object into the scene
